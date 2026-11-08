@@ -1,0 +1,8 @@
+# 1ファイル版（tools/build_single.py で作り直せる）
+dist/
+
+# Claude Code のローカル設定
+.claude/
+
+# ZIP
+*.zip

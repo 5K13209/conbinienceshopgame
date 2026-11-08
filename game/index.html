@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>コンビニ激戦区</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header id="topbar"></header>
+    <main id="main">
+      <div id="leftcol">
+      <section id="stage">
+        <div id="tabs">
+          <button id="tabOwn" class="tab active">🏪 自分の店</button>
+          <button id="tabRival" class="tab">🏬 ライバル店</button>
+        </div>
+        <canvas id="cv" width="880" height="500"></canvas>
+        <div id="toasts"></div>
+      </section>
+      <section id="panel"></section>
+      </div>
+      <aside id="side">
+        <div id="snsbox"></div>
+        <div id="tlhead">📱 タイムライン</div>
+        <div id="timeline"></div>
+      </aside>
+    </main>
+  </div>
+  <div id="overlay" class="hidden"></div>
+  <div id="modal" class="hidden"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/data/products.js"></script>
+  <script src="js/data/customers.js"></script>
+  <script src="js/data/sabotage.js"></script>
+  <script src="js/data/items.js"></script>
+  <script src="js/data/events.js"></script>
+  <script src="js/data/cards.js"></script>
+  <script src="js/data/staff.js"></script>
+  <script src="js/data/sns.js"></script>
+  <script src="js/sim.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
