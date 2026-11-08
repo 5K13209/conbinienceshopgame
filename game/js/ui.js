@@ -184,7 +184,7 @@
       const items = Object.keys(me.items).filter((k) => me.items[k] > 0);
       const maxC = CK.cardSlots(me);
       const slots = [];
-      for (let i = 0; i < maxC; i++) {
+      for (let i = 0; i < Math.max(maxC, me.cardList.length); i++) {
         const c = me.cardList[i] ? CK.byId.card[me.cardList[i]] : null;
         slots.push(c ? `<div class="cslot r-${c.rarity}" title="${c.name}：${c.desc}${c.debuff ? ' ／ ' + c.debuff : ''}">${c.icon}<small>${c.name}</small></div>` : '<div class="cslot empty">＋</div>');
       }
@@ -224,7 +224,18 @@
   };
 
   // ---------------- 全画面オーバーレイ ----------------
-  UI.overlay = function (node) { const o = $('overlay'); o.innerHTML = ''; o.appendChild(node); o.classList.remove('hidden'); o.scrollTop = 0; };
+  // 同じ画面の描き直し（商品を選んだ、バイトを雇った等）ならスクロール位置を保つ。別の画面に切り替わったときだけ一番上へ
+  UI.overlay = function (node) {
+    const o = $('overlay');
+    const heading = (el) => { const x = el.querySelector('h1, h2'); return x ? x.textContent : null; };
+    const prev = o.classList.contains('hidden') ? null : heading(o);
+    const keep = prev !== null && prev === heading(node);
+    const top = o.scrollTop;
+    o.innerHTML = '';
+    o.appendChild(node);
+    o.classList.remove('hidden');
+    o.scrollTop = keep ? top : 0;
+  };
   UI.hideOverlay = () => { $('overlay').classList.add('hidden'); $('overlay').innerHTML = ''; };
 
   const segBadges = (p) => h('div', { class: 'segs' },
@@ -381,7 +392,7 @@
                 h('div', { class: 'oddbar' }, h('i', { class: 's', style: `width:${o.success}%` }), h('i', { class: 'f', style: `width:${o.fail}%` }), h('i', { class: 'x', style: `width:${o.scandal}%` })),
                 h('div', { class: 'odds' }, h('span', { class: 'o-s' }, `成功 ${o.success}%`), h('span', { class: 'o-f' }, `失敗 ${o.fail}%`), h('span', { class: 'o-x' }, `スキャンダル ${o.scandal}%`)),
                 h('div', { class: 'small b' }, '費用 ' + U.yen(cost)));
-            })) : h('div', { class: 'muted' }, '今月の妨害枠は使い切った'),
+            })) : h('div', { class: 'muted' }, CK.sabQuota(me) === 0 ? '「完全防御」のカードを持っているので妨害できない' : '今月の妨害枠は使い切った'),
             h('div', { class: 'muted small' }, `成功すると相手の客の一部が自分の店に流れてくる（3日間 来店 +15%）。あなたの疑惑：${CK.suspLevel(me)}（高いほどスキャンダル率が上がる）。相手の罠に引っかかると、さらにバレやすい`)),
           h('div', { class: 'col' },
             h('h3', {}, '🪤 罠を仕掛ける'),
